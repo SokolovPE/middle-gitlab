@@ -22,13 +22,15 @@
             </div>
 
             <v-spacer></v-spacer>
-
-            <v-btn
-                href="https://github.com/vuetifyjs/vuetify/releases/latest"
-                target="_blank"
-                text
-            >
-                <span class="mr-2">Latest Release</span>
+            <div class="user-info mr-2" v-if="isUserLogged">
+                <span>{{ getUsername }}</span>
+            </div>
+            <v-btn @click.prevent="performLogout" text v-if="isUserLogged">
+                <span class="mr-2">Logout</span>
+                <v-icon>mdi-open-in-new</v-icon>
+            </v-btn>
+            <v-btn to="/login" text v-else>
+                <span class="mr-2">Login</span>
                 <v-icon>mdi-open-in-new</v-icon>
             </v-btn>
         </v-app-bar>
@@ -40,11 +42,21 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
 export default {
     name: 'App',
-
-    data: () => ({
-        //
-    }),
+    computed: {
+        ...mapGetters('auth', ['getUsername', 'isUserLogged']),
+    },
+    methods: {
+        ...mapActions('auth', ['logout']),
+        performLogout() {
+            this.logout().then(() => {
+                if (!this.isUserLogged) {
+                    this.$router.push({ name: 'Login' });
+                }
+            });
+        },
+    },
 };
 </script>
