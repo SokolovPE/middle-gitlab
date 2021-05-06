@@ -27,9 +27,8 @@ export default {
             this.login({
                 username: this.username,
                 gitlabToken: this.gitlabToken,
-            }).then(() => {
-                this.$router.push({ name: 'Home' });
             });
+            this.$router.push({ name: 'Home' });
         },
     },
 };

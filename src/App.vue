@@ -51,11 +51,7 @@ export default {
     methods: {
         ...mapActions('auth', ['logout']),
         performLogout() {
-            this.logout().then(() => {
-                if (!this.isUserLogged) {
-                    this.$router.push({ name: 'Login' });
-                }
-            });
+            this.logout();
         },
     },
 };

@@ -6,7 +6,7 @@ const state = {
 const getters = {
     getGitlabToken: (state) => state.user.gitlabToken,
     getUsername: (state) => state.user.username,
-    isUserLogged: (state) => (state.user ? true : false),
+    isUserLogged: (state) => !!state.user,
 };
 
 const mutations = {
@@ -23,7 +23,7 @@ const actions = {
     logout: ({ commit }) => {
         commit('SET_USER', null);
         localStorage.removeItem('user');
-    }
+    },
 };
 
 export default {

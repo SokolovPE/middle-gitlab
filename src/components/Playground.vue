@@ -1,6 +1,5 @@
 <template>
     <div>
-        
         <!-- <v-row>
             <v-col cols="4">
                 Create Merge:
@@ -66,12 +65,7 @@ export default {
         };
     },
     computed: {
-        ...mapGetters('gitlab', [
-            'getToken',
-            'getUser',
-            'getProjectApiUrl',
-            'getProjects',
-        ]),
+        ...mapGetters('gitlab', ['getProjectApiUrl', 'getProjects']),
     },
     methods: {
         ...mapActions('gitlab', ['updateProjects', 'selectProject']),
