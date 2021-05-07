@@ -17,8 +17,8 @@ import { GitlabService } from '../services/gitlab.service';
 export default {
     data() {
         return {
-            username: 'sokolovpe',
-            gitlabToken: 'P3HzDgqPGvYQzMiMUb4N',
+            username: '',
+            gitlabToken: '',
         };
     },
     computed: {
