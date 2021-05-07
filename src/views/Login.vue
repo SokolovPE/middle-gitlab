@@ -12,22 +12,37 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
+import { GitlabService } from '../services/gitlab.service';
 export default {
     data() {
         return {
-            username: '',
-            gitlabToken: '',
+            username: 'sokolovpe',
+            gitlabToken: 'P3HzDgqPGvYQzMiMUb4N',
         };
+    },
+    computed: {
+        ...mapGetters('auth', ['getUsername', 'getGitlabToken']),
+        ...mapGetters('gitlab', ['getBaseUrl', 'getProjectApiUrl']),
     },
     methods: {
         ...mapActions('auth', ['login']),
+        ...mapActions('gitlab', ['setProjects']),
         performLogin() {
             //TODO: Add field validation.
             this.login({
                 username: this.username,
                 gitlabToken: this.gitlabToken,
             });
+            new GitlabService(
+                this.getBaseUrl,
+                this.getUsername,
+                this.getGitlabToken
+            )
+                .fetchProjects()
+                .then((data) => {
+                    this.setProjects(data);
+                });
             this.$router.push({ name: 'Home' });
         },
     },

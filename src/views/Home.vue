@@ -1,15 +1,12 @@
 <template>
-    <playground />
+    <div>
+        <h2>Home page</h2>
+        <v-btn :to="{ name: 'CreateMR' }">Create MR</v-btn>
+    </div>
 </template>
 
 <script>
-import Playground from '../components/Playground';
-
 export default {
     name: 'Home',
-
-    components: {
-        Playground,
-    },
 };
 </script>

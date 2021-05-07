@@ -22,16 +22,26 @@
             </div>
 
             <v-spacer></v-spacer>
+            <div class="d-flex align-center">
+                <v-select
+                    v-model="currentProject"
+                    :items="getProjects"
+                    item-text="name"
+                    item-value="id"
+                    style="max-width: 125px"
+                    return-object
+                >
+                </v-select>
+            </div>
             <div class="user-info mr-2" v-if="isUserLogged">
                 <span>{{ getUsername }}</span>
             </div>
             <v-btn @click.prevent="performLogout" text v-if="isUserLogged">
-                <span class="mr-2">Logout</span>
-                <v-icon>mdi-open-in-new</v-icon>
+                <v-icon>mdi-logout</v-icon>
             </v-btn>
             <v-btn to="/login" text v-else>
                 <span class="mr-2">Login</span>
-                <v-icon>mdi-open-in-new</v-icon>
+                <v-icon>mdi-login</v-icon>
             </v-btn>
         </v-app-bar>
 
@@ -47,12 +57,28 @@ export default {
     name: 'App',
     computed: {
         ...mapGetters('auth', ['getUsername', 'isUserLogged']),
+        ...mapGetters('gitlab', ['getCurrentProject', 'getProjects']),
+        currentProject: {
+            get() {
+                return this.getCurrentProject;
+            },
+            set(value) {
+                this.selectProject(value);
+            },
+        },
     },
     methods: {
         ...mapActions('auth', ['logout']),
+        ...mapActions('gitlab', ['selectProject']),
         performLogout() {
             this.logout();
         },
     },
 };
 </script>
+
+<style lang="scss" scoped>
+.v-text-field__details {
+    display: none !important;
+}
+</style>
